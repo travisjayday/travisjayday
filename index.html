@@ -3,11 +3,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="main.css"/>
     <link rel="stylesheet" href="css/aos.css"/>
-    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Ubuntu" />
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
-      rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
-<body>
+<body class="stop-scrolling">
     <div id="header">
         <div id="header-content">
             <div id="headline">
@@ -18,18 +16,57 @@
                     I'm Travis Ziegler
                 </h2>
             </div>
+        <div id="navDiv">
+            <div class="text" onclick="moveTo('software-showcase')">software</div>
+            <div class="text" style="left: 400px" onclick="moveTo('apps-showcase')">apps</div>
+            <div class="text" style="left: 800px" onclick="moveTo('games-showcase')">games</div>
+            <div class="text" style="left: 700px; top: 153px">art</div>
+            <div class="text" style="left: 400px; top: 153px">contact</div>
+            <div class="line-wrap">
+            <div class="line"></div>
+            <div class="line" style="width: 70%;"></div>
+            </div>
+            <div class="right-edge"></div>
+        </div>
+ 
         </div>
     </div>
     <div id="main">
         <div id="welcome-card" class="">
-            <div>
-                <h1>Welcome</h1>
-                <div style="width:100%"></div>
-                <h3>I'm an undergrad at MIT. I like to design, write, study, and build - apps, websites, drivers, robots, art, and more. Learn about what I do and say hi back!</h3>
+            <img src="assets/profile_pic.jpg" class="z0"> 
+            <div class="msg">
+                <div>
+                    <h1>Welcome</h1>
+                    <div style="width:100%"></div>
+                    <h3>I'm an undergrad at MIT. I like to design, write, study, and build - apps, websites, drivers, robots, art, and more. Learn more about me and say hi back!</h3>
+                </div>
+                <div class="link-container">
+                    <div class="social-link z0" onclick="openTab('https://github.com/travisjayday')">
+                        <object data="assets/color/github.svg"></object>
+                        GitHub
+                    </div>
+                    <div class="social-link z0" onclick="openTab('https://www.linkedin.com/in/travisjayday')">
+                        <object data="assets/color/linkedin.svg"></object>
+                        LinkedIn 
+                    </div>
+                    <div class="social-link z0" onclick="openTab('https://play.google.com/store/apps/developer?id=travisjayday')">
+                        <object data="assets/color/gplay.svg"></object>
+                        GooglePlay 
+                    </div>
+                    <div class="social-link z0" onclick="openTab('https://www.youtube.com/channel/UCGBre6muq8i4-iUY5I3B0ag')">
+                        <object data="assets/color/youtube.svg"></object>
+                       YouTube 
+                    </div>
+                </div>
             </div>
-            <img src="assets/profile_pic.jpg"> 
         </div>
-        <div class="showcase">
+        <div class="showcase" id="software-showcase">
+            <div data-aos="fade-right" class="timeline left">
+                <div class="wrap">
+                    <div class="big-knob"></div>
+                    <div class="dyno"></div>
+                </div>
+            </div>
             <div>
                 <h1 data-aos="fade-left" data-aos-anchor-placement="bottom-bottom" data-aos-offset="100">software projects</h1>
                 <h3 data-aos="fade-left">a collection random projects</h3>
@@ -40,13 +77,36 @@
             <hr data-aos="fade-up">
         </div>
         <div style="height:100px"></div>
-        <div class="showcase right-heavy">
+        <div class="showcase right-heavy" id="apps-showcase">
+             <div data-aos="fade-left" class="timeline right">
+                <div class="wrap">
+                    <div class="big-knob"></div>
+                    <div class="dyno"></div>
+                </div>
+            </div>
             <div>
-                <h1 data-aos="fade-right">mobile applications</h1>
-                <h3 data-aos="fade-right">a collection of published and unpublished apps</h3>
+                <h1 data-aos="fade-right">mobile apps</h1>
+                <h3 data-aos="fade-right">a collection of my published apps</h3>
             </div>
             <div style="height:30px"></div>
-            <div id="apps-container"></div>
+            <div id="app-projects-container"></div>
+            <div style="height:40px"></div>
+            <hr data-aos="fade-up">
+        </div>
+        <div style="height:100px"></div>
+        <div class="showcase" id="games-showcase">
+             <div data-aos="fade-right" class="timeline left">
+                <div class="wrap">
+                    <div class="big-knob"></div>
+                    <div class="dyno"></div>
+                </div>
+            </div>
+            <div>
+                <h1 data-aos="fade-left" data-aos-anchor-placement="bottom-bottom" data-aos-offset="100">video games</h1>
+                <h3 data-aos="fade-left">a collection of games I made on various platforms</h3>
+            </div>
+            <div style="height:30px"></div>
+            <div id="games-projects-container"></div>
             <div style="height:40px"></div>
             <hr data-aos="fade-up">
         </div>

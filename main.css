@@ -15,10 +15,11 @@ body {
 }
 
 #header {
-    background-color: var(--color-blue600);
+    background: url("assets/seamless_bg.png"), var(--color-blue600);
+    background-blend-mode: multiply;
+    background-opacity: 0.5;
     text-align: center;
-    height: 1000px;
-    transition: height 0.5s;
+    height: 4000px;
 }
 
 #header-content {
@@ -48,7 +49,7 @@ h2 {
 }
 
 h3 {
-    font-size: 30px;
+    font-size: 25px;
     font-weight: 300;
 }
 
@@ -65,29 +66,61 @@ h3 {
     flex-flow: wrap;
     align-content:flex-start;
     background-color: white;
-    padding: 4% 4%;
+    /*padding: 4% 4%;*/
     transition: transform 0.5s;
     transform: translate(0, 0); 
+    box-shadow: 0 3px 4px 0 rgba(0,0,0,0.03), 0 3px 3px -2px rgba(0,0,0,0.01), 0 1px 8px 0 rgba(0,0,0,0.09);   
+    padding: 25px;
 }
 
 #welcome-card img {
-    border-radius: 50%;
-    min-width: 120px;
+    min-width: 290px;
     width: 30%;
     display: flex;
-    margin: 0 auto;
+    margin: 25px;
 }
 
-#welcome-card div {
+#welcome-card h1 {
+    margin-top: 15px;
+}
+
+#welcome-card .msg {
     display: flex;
     flex-flow: wrap;
-    align-content: center;
-    max-width: 730px;
-    line-height: 45px;
-    margin: 0 auto;
+    align-content: space-between;
+    max-width: 840px;
+    line-height: 40px;
+    margin: 25px;
+}
+
+.link-container {
+    display: flex;
+    flex-flow: wrap;
+    margin-left: -13px;
+}
+
+.z0 {
+    box-shadow: 0 1px 1px 0 rgba(0,0,0,0.1), 0 2px 1px -1px rgba(0,0,0,0.08), 0 1px 3px 0 rgba(0,0,0,0.16);
+}
+
+.social-link {
+    padding: 10px 20px;
+    font-size: 20px;
+    display: flex;
+    margin: 13px;
+    margin-top: 14px;
+    margin-bottom: 0px;
+    cursor: pointer;
+}
+
+.social-link object {
+    height: 30px;
+    margin: auto 0;
+    margin-right: 15px;
 }
 
 .showcase {
+    position: relative;
     padding: 0 7%;
 }
 
@@ -97,6 +130,8 @@ h3 {
 
 .git-project {
     display: flex;
+    flex-flow: wrap;
+    justify-content: flex-end;
     align-content: center;
     padding-bottom: 20px;
     max-width: 80%;
@@ -111,8 +146,22 @@ h3 {
     margin-right: 40px;
 }
 
+.wrap-reverse {
+    flex-flow: wrap-reverse !important;
+}
+
+.justify-right {
+    justify-content: flex-end !important;
+}
+
+.justify-left {
+    justify-content: flex-start !important;
+}
+
 .git-project div {
-    width: 100%;
+    display: flex;
+    max-width: 600px;
+    flex-flow: wrap;
 }
 
 .git-project i {
@@ -123,20 +172,214 @@ h3 {
 
 .git-project h4 {
     margin: 0;
+    margin-bottom: 10px;
+    margin-top: 16px;
     font-size: 30;
+    padding: 0 5px;
 }
 
 .git-project h5 {
     margin: 0;
-    font-size: 20;
+    max-width: 900px;
+    font-size: 20px;
     font-weight: 200;
+    display: inline-block;
+    padding: 0 5px;
+}
+
+.git-project .right-icon {
+    display: flex;
+    align-self: flex-end;
+    margin-left: 50px;
+    margin-top: auto;
+    width: 145px;
+    height: 145px;
+}
+
+.git-project .left-icon {
+    display: flex;
+    margin-right: 50px; 
+    width: 145px;
+    height: 145px;
+    margin-top: auto;
+}
+
+.reverse-flex {
+    flex-direction: column-reverse;
+}
+
+.tag-container {
+    margin-top: 10px;  
+}
+
+.tag-container div {
+    display: flex !important;
+    border: 1px solid black;
+    margin: 5px;
+    width: auto;
+    line-height: 30px;
+    height: 30px;
+    padding: 0 10px;
+}
+
+.tag-container .dark {
+    background-color: black;
+    color: white;
+    display: inline-block;
+    position: relative;
+    z-index: 1;
+    font-weight: 800;
+}
+
+.tag-container li {
+    display: inline-block;
+}
+
+.tag-container object {
+    height: 20px;
+    display: inline-block;
+    vertical-align: middle;
+    margin: 0px;
+    margin-bottom: 2.5px;
+    margin-top: 3px;
+    margin-right: 5px;
+}
+
+object {
+    pointer-events: none;
 }
 
 hr {
-    opacity: 0.3;
+    opacity: 0.5;
+    height: 1px;
+    border: none;
+    background-color: grey;
 }
 
 
 .elevation-1 {
     box-shadow: 0 7px 14px 0 rgba(60,66,87,.08),0 3px 6px 0 rgba(0,0,0,.12)
+}
+
+.timeline {
+    position: absolute;
+    margin: 35px 0px;
+    top: 0px;
+    width: 2px;
+    bottom: 0px;
+    opacity: 0.3;
+}
+
+.right {
+    right: 0px !important;
+}
+
+.left {
+    left: 0px !important;
+}
+
+.timeline .wrap {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    opacity: 0.3;
+    background-color: grey;
+}
+
+.timeline .big-knob {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    background-color: black;
+    top: 0px;
+    transform: translate(-14px, 0px);
+}
+
+.timeline .dyno {
+    position: sticky;
+    top: 70%;
+    width: 20px;
+    height: 20px;
+    float: right;
+    background-color: black;
+    border-radius: 10px;
+    transform: translate(9px, 0px);
+    transition: opacity 0.2s;
+}
+
+#navCanvas {
+    width: 100%;
+    height: 400px;
+}
+
+@media screen and (max-width:1300px){    
+    #navDiv { display:none !important; }
+}
+
+#navDiv {
+    position: relative;
+    max-width: 1200px;
+    display: flex;
+    margin: auto;
+    width: 100%;
+    opacity: 0;
+    transition: opacity 1s;
+}
+
+#navDiv .line-wrap {
+    height: 100px;
+    width: 100%;
+}
+
+#navDiv .text {
+    position: absolute;
+    top: -48px;
+    left: 100px;
+    font-size: 30px;
+    color: white;
+    transition: transform 0.3s;
+    cursor: pointer;
+}
+
+#navDiv .text:hover {
+    transform: scale(1.3, 1.3) translate(0, -3px);
+}
+
+#navDiv .text::after {
+    display: block;
+    top: 30px;
+    width: 20px;
+    height: 20px;
+    content: "\00a0";
+    margin: 0 auto;
+    transform: translate(0, 5px);
+    background-color: white;
+}
+
+#navDiv .line {
+    background-color: grey;
+    width: 100%;
+    margin-right: 100px;
+    margin-bottom: 200px;
+    border: 2px solid white;
+}
+
+#navDiv .line:last-child {
+    width: 70%;
+    margin-left: auto;
+    margin-right: 0px;
+}
+
+#navDiv .right-edge {
+    width: 100px;
+    height: 200px;
+    border-bottom-right-radius: 0px;
+    border-top-right-radius: 0px;
+    border: 4px solid white;
+    border-left-width: 0px;
+}
+
+.stop-scrolling {
+  height: 100%;
+  overflow: hidden;
 }
