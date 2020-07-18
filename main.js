@@ -303,7 +303,6 @@ $(document).ready(function() {
             setTimeout(()=>{
                 $(document.body).removeClass("stop-scrolling");
             }, 750);
-            $("#navDiv").css("opacity", "1");
         }
     });
     window.scrollTo(0, 0);
