@@ -125,6 +125,7 @@ h3 {
 }
 
 .showcase {
+	overflow: hidden;
     position: relative;
     padding: 0 7%;
 }
@@ -255,6 +256,7 @@ object {
 }
 
 hr {
+	display: none;
     height: 1px;
     border: none;
     background-color: var(--color-grey);
@@ -299,6 +301,7 @@ hr {
 }
 
 .timeline .dyno {
+	display: none;
     position: sticky;
     top: 70%;
     width: 20px;
@@ -317,6 +320,7 @@ hr {
 #navDiv {
     top: 50;
     position: relative;
+	z-index: 1;
     max-width: 1200px;
     display: flex;
     margin: auto;
@@ -451,4 +455,19 @@ pointer-events: none;
 }
 body[data-aos-duration='4000'] [data-aos], [data-aos][data-aos][data-aos-duration='4000']{
 transition-duration: 4000ms;
+}
+
+#skills-container {
+	cursor: pointer;
+}
+
+#skills-container object {
+	width: 350px;
+	position: absolute;
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	margin: auto;
+	z-index: -1;
 }

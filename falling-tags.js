@@ -97,8 +97,7 @@ var box2d = (function() {
     window.b2Vec2 = b2Vec2
 
     world = new b2World(
-        new b2Vec2(0, 10),    //gravity
-        true                 //allow sleep
+        new b2Vec2(0, 10)    //gravity
     );
 
     var fixDef = new b2FixtureDef;
@@ -191,6 +190,7 @@ function setFloorHeight(p) {
 }
 
 function update() {
+	ctx.canvas.width  = $("#skills-container").width();
     world.Step(
         1 / 60, // frame-rate
         10,     // velocity iterations
@@ -218,6 +218,10 @@ $(document).on("scroll", () => {
     setFloorHeight(p)
     
     console.log(p);
+});
+
+$(window).on("resize", () => {
+	$("#fallingTagsCanvas")[0].width = window.innerWidth;
 });
 
 box2d();

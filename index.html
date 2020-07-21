@@ -151,18 +151,32 @@
             </div>
             <div>
                 <h1 data-aos="fade-left" data-aos-anchor-placement="bottom-bottom" data-aos-offset="100">résumé</h1>
-                <h3 data-aos="fade-left">download a PDF of my skills and work experiences</h3>
+                <h3 data-aos="fade-left">get an overview of my skills and work experience</h3>
             </div>
             <div style="height:30px"></div>
-            <div id="skills-container">
+            <div id="skills-container" onclick="openTab('assets/data/resume.pdf')">
                 <canvas width="1200" height="680" id="fallingTagsCanvas"></canvas>
+				<object data-aos="fade-up" data="assets/cv_icon.svg"></object>
                 <canvas width="1200" height="680" id="debugCanvas" style="display: none; border: 1px solid black"></canvas>
             </div>
             <hr style="margin: 0px" data-aos="fade-up" data-aos-offset="180">
         </div>
         <div style="height:100px"></div>
-
-        <div style="height:500px"></div>
+        <div class="showcase right-heavy no-padding" id="contact-showcase">
+             <div data-aos="fade-left" class="timeline right">
+                <div class="wrap">
+                    <div class="big-knob"></div>
+                    <div class="dyno"></div>
+                </div>
+            </div>
+            <div class="margin-7">
+                <h1 data-aos="fade-right">contact me</h1>
+                <h3 data-aos="fade-right">I'm always open to new projects and collaboration</h3>
+            </div>
+            <div style="height:30px"></div>
+            <div style="height:26px"></div>
+        </div>
+        <div style="height:400px"></div>
     </div>
     <script src="js/aos.js"></script>
     <script src="js/mustache.min.js"></script>
