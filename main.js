@@ -286,6 +286,42 @@ $(document).ready(function() {
         $("#games-projects-container").append(html);
     });
 
+    const NUM_ART = 30; 
+    cachedArt = new Array(NUM_ART)
+    function addImg(url, ext, index) {
+        cachedArt[index] = `
+            <img 
+                onclick='
+                    var duration = 300;
+                    var main = $("#art-current-main").children();
+                    main.css("transition-duration", (duration / 1000) + "s"); 
+                    main.css("opacity", "0"); 
+                    setTimeout(()=>{
+                        main[0].src = this.src;
+                        main.css("opacity", "1"); 
+                    }, duration);
+                '
+                src='${url}.${ext}'/>
+        `;
+    }
+    for (var i = 1; i < NUM_ART + 1; i++) {
+        (function (j) {
+            let tester=new Image();
+            var url = `assets/art/${i}-img`;
+            console.log("Trying toa add img:" + url);
+            tester.onload=() => addImg(url, "png", j);
+            tester.onerror=() => addImg(url, "jpg", j);
+            tester.src=url + '.png'; 
+        })(i);
+    }
+    var pollFinishLoad = setInterval(()=>{
+        for (var i = 1; i < NUM_ART + 1; i++)
+            if (cachedArt[i] === undefined) return;
+        $("#art-container").append(cachedArt.join(''));
+        $("#art-current-main").append("<img src='assets/art/1-img.png'/>");
+        clearInterval(pollFinishLoad);
+    }, 300);
+
     var h;
     if (window.visualViewport === undefined) h = window.innerHeight;
     else h = window.visualViewport.height;
@@ -305,5 +341,36 @@ $(document).ready(function() {
             }, 750);
         }
     });
+
+    var imgWidth = 320 + 10;
+    var currentIdx = 0;
+
+    window.addEventListener("touchstart", interactionListener);
+    window.addEventListener("mousedown", interactionListener);
+    function interactionListener(e) {
+        if (e.target == $("#art-container")[0])
+            $("#art-container").stop();
+    }
+    $("#art-container").on("scroll", () => {
+        var amount = $("#art-container")[0].scrollLeft;
+        var idx = Math.floor(amount / imgWidth);
+        if (idx == currentIdx) return;
+        currentIdx = idx;
+        var duration = 300;
+        var main = $("#art-current-main").children();
+        main.css("transition-duration", (duration / 1000) + "s"); 
+        main.css("opacity", "0"); 
+        setTimeout(()=>{
+            main[0].src = $("#art-container").children()[idx].src;
+            main.css("opacity", "1"); 
+        }, duration);
+    });
+    function scrollRight() {
+        $("#art-container").animate({scrollLeft: imgWidth * 30}, 30 * 3000, "linear", scrollLeft)
+    }
+    function scrollLeft() {
+        $("#art-container").animate({scrollLeft: 0}, 30 * 3000, "linear", scrollRight)
+    }
+    scrollRight();
     window.scrollTo(0, 0);
 });

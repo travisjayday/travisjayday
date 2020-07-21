@@ -26,7 +26,7 @@
                 <div>
                     <h1>Welcome</h1>
                     <div style="width:100%"></div>
-                    <h3>I'm an undergrad at MIT. I like to design, write, study, and build - apps, websites, drivers, robots, art, and more. Learn more about me and say hi back!</h3>
+                    <h3>I'm an <a href="https://www.eecs.mit.edu/">EECS</a> undergrad at MIT. I like to design, write, study, and build - apps, websites, drivers, robots, art, and more. Learn more about me and say hi back!</h3>
                 </div>
                 <div class="link-container">
                     <div class="social-link z0" onclick="openTab('https://github.com/travisjayday')">
@@ -50,8 +50,9 @@
         </div>
         <div id="navDiv" data-aos="fade-down">
             <div class="text" style="left: 600px" onclick="moveTo('apps-showcase')">apps</div>
-            <div class="text" style="left: 1100px" onclick="moveTo('games-showcase')">games</div>
-            <div class="text" style="left: 1000px; top: 53px">art</div>
+            <div class="text" style="left: 900px" onclick="moveTo('games-showcase')">games</div>
+            <div class="text" style="left: 1120px" onclick="moveTo('art-showcase')">art</div>
+            <div class="text" style="left: 1050px; top: 53px" onclick="moveTo('skills-showcase')">résumé</div>
             <div class="text" style="left: 700px; top: 53px">contact</div>
             <div class="line-wrap">
             <div class="line"></div>
@@ -111,12 +112,64 @@
             <div style="height:40px"></div>
             <hr data-aos="fade-up">
         </div>
+
+        <div style="height:100px"></div>
+
+        <div class="showcase right-heavy no-padding" id="art-showcase">
+             <div data-aos="fade-left" class="timeline right">
+                <div class="wrap">
+                    <div class="big-knob"></div>
+                    <div class="dyno"></div>
+                </div>
+            </div>
+            <div class="margin-7">
+                <h1 data-aos="fade-right">artwork</h1>
+                <h3 data-aos="fade-right">a collection of my amateur art</h3>
+            </div>
+            <div style="height:30px"></div>
+            <div id="art-current-main" 
+                data-aos="fade-right"
+                data-aos-offset=500
+                data-aos-duration="2000">
+            </div>
+            <div id="art-container" 
+                class="show-scrollbar" 
+                data-aos="fade-right" 
+                data-aos-duration="2000">
+            </div>
+            <div style="height:26px"></div>
+        </div>
+
+        <div style="height: 100px"></div>
  
+        <div class="showcase" id="skills-showcase">
+            <div data-aos="fade-right" class="timeline left">
+                <div class="wrap">
+                    <div class="big-knob"></div>
+                    <div class="dyno"></div>
+                </div>
+            </div>
+            <div>
+                <h1 data-aos="fade-left" data-aos-anchor-placement="bottom-bottom" data-aos-offset="100">résumé</h1>
+                <h3 data-aos="fade-left">download a PDF of my skills and work experiences</h3>
+            </div>
+            <div style="height:30px"></div>
+            <div id="skills-container">
+                <canvas width="1200" height="680" id="fallingTagsCanvas"></canvas>
+                <canvas width="1200" height="680" id="debugCanvas" style="display: none; border: 1px solid black"></canvas>
+            </div>
+            <hr style="margin: 0px" data-aos="fade-up" data-aos-offset="180">
+        </div>
+        <div style="height:100px"></div>
+
         <div style="height:500px"></div>
     </div>
     <script src="js/aos.js"></script>
     <script src="js/mustache.min.js"></script>
     <script src="js/jquery-3.5.1.js"></script>
+    <script src="https://code.createjs.com/1.0.0/createjs.min.js"></script>
+    <script src="js/Box2d.min.js"></script>
     <script src="main.js"></script>
+    <script src="falling-tags.js"></script>
 </body>
 </html>
