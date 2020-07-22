@@ -261,6 +261,25 @@ var gamesProjTemplate = `
     </div>
 `
 
+var socialLinksTemplate = `
+    <div class="social-link z0" onclick="openTab('https://github.com/travisjayday')">
+        <object data="assets/color/github.svg"></object>
+        GitHub
+    </div>
+    <div class="social-link z0" onclick="openTab('https://www.linkedin.com/in/travisjayday')">
+        <object data="assets/color/linkedin.svg"></object>
+        LinkedIn 
+    </div>
+    <div class="social-link z0" onclick="openTab('https://play.google.com/store/apps/developer?id=travisjayday')">
+        <object data="assets/color/gplay.svg"></object>
+        GooglePlay 
+    </div>
+    <div class="social-link z0" onclick="openTab('https://www.youtube.com/channel/UCGBre6muq8i4-iUY5I3B0ag')">
+        <object data="assets/color/youtube.svg"></object>
+       YouTube 
+    </div>
+`
+
 
 function moveTo(id) {
     window.scroll({
@@ -270,6 +289,8 @@ function moveTo(id) {
 }
 
 $(document).ready(function() {
+
+    $(".link-container").append(socialLinksTemplate);
 
     softProjData.forEach((item)=>{
         var html = Mustache.render(softProjTemplate, item);
