@@ -372,7 +372,7 @@ $(document).ready(function() {
         if (e.target == $("#art-container")[0])
             $("#art-container").stop();
     }
-    $("#art-container").on("scroll", () => {
+    $("#art-container").on("scroll touchstart", () => {
         var amount = $("#art-container")[0].scrollLeft;
         var idx = Math.floor(amount / imgWidth);
         if (idx == currentIdx) return;
