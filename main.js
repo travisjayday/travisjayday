@@ -9,6 +9,18 @@ window.onload = function() {
     window.scrollTo(0, 0);
 }
 
+var blogsData = [
+     {
+        "title": "Automating Free Workout Programs",
+        "desc": "This blog covers how I used pubsubhub, Google's YouTube API, and MIT's dialup to quickly snatch AthleanX workout programs.",
+        "url": "./blogs/athlean",
+        "tags": {
+            "items": ["PHP", "Python3", "Automation"]
+        }       
+    },
+]
+ 
+
 var softProjData = [
      {
         "title": "The OMo-X",
@@ -186,6 +198,31 @@ Mustache.escape = function (value)
     return value;
 };
 
+var blogsTemplate = `
+    <div data-aos="fade-right" class="git-project wrap-reverse justify-right" onclick="openTab('{{url}}')">
+        <div class="justify-right">
+            <h4>{{title}}</h4>
+            <h5>{{desc}}</h5>
+            {{#tags}}
+                <div class="tag-container justify-right">
+                    {{#items}}
+                        <div>
+                            {{.}}
+                        </div>
+                    {{/items}} 
+                    {{#buttons}}
+                        <div onclick="{{onclick}}" class="dark">
+                            <object data="{{icon}}"></object>
+                            <li>{{label}}</li>
+                        </div>
+                    {{/buttons}} 
+                </div> 
+            {{/tags}}
+        </div>
+        <i style="padding-left: 200px" class="material-icons">open_in_new</i>
+    </div>
+`
+
 var softProjTemplate = `
     <div data-aos="fade-left" class="git-project justify-left" onclick="openTab('{{url}}')">
         <object data="assets/git_repo.svg" type="image/svg+xml"></object>
@@ -292,6 +329,11 @@ $(document).ready(function() {
 
     $(".link-container").append(socialLinksTemplate);
 
+    blogsData.forEach((item)=>{
+        var html = Mustache.render(blogsTemplate, item);
+        $("#blogs-container").append(html);
+    });
+
     softProjData.forEach((item)=>{
         var html = Mustache.render(softProjTemplate, item);
         $("#software-projects-container").append(html);
@@ -307,7 +349,7 @@ $(document).ready(function() {
         $("#games-projects-container").append(html);
     });
 
-    const NUM_ART = 30; 
+    const NUM_ART = 32; 
     cachedArt = new Array(NUM_ART)
     function addImg(url, ext, index) {
         cachedArt[index] = `
@@ -335,12 +377,26 @@ $(document).ready(function() {
             tester.src=url + '.png'; 
         })(i);
     }
+    $("#art-current-main").append("<img src='assets/art/1-img.png'/>");
     var pollFinishLoad = setInterval(()=>{
-        for (var i = 1; i < NUM_ART + 1; i++)
-            if (cachedArt[i] === undefined) return;
-        $("#art-container").append(cachedArt.join(''));
-        $("#art-current-main").append("<img src='assets/art/1-img.png'/>");
-        clearInterval(pollFinishLoad);
+        var done = 0;
+        for (var i = 1; i < NUM_ART + 1; i++) {
+            if (cachedArt[i] === undefined) {
+                // image not loaded yet
+                continue;
+            }
+            else if (cachedArt[i] === "done") {
+                // image already added to dom
+                continue;  
+            }
+            else {
+                $("#art-container").append(cachedArt[i]);
+                cachedArt[i] = "done";
+                done += 1
+            }
+        }
+        // done loading
+        if (done == NUM_ART) clearInterval(pollFinishLoad);
     }, 300);
 
     var h;
@@ -350,7 +406,7 @@ $(document).ready(function() {
     var scrollCount = 0;
     $("#header").css("height", h + "px");
     setTimeout(()=>$("#header").css("transition", "height 0.5s"), 10);
-    $(document).on("onwheel wheel mousewheel scroll scrollstart", () => {
+    $(document).on("click onwheel wheel mousewheel scroll scrollstart", () => {
         console.log("START");
         scrollCount++;
         if (scrollCount == 1) {
