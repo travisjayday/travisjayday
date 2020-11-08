@@ -1,0 +1,168 @@
+<html>
+<head>
+    <title>Snatching Athlean-X Programs</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="blog.css">
+</head>
+<body>
+    <div id='header'>
+        <div id='toolbar'>
+            <a href='https://tjz.scripts.mit.edu' class='material-icons'>arrow_back</a>
+        </div>
+        <div id='header-wrap'>
+            <div id='header-space'></div>
+            <div id='post-date'>
+                <h4>&nbsp;posted on 11/6/2020 by travisjayday</h4>
+            </div>
+            <div id='post-title'>
+                <h1>Snatching Athlean-X Programs for Fun and Profit</h1>
+            </div> 
+        </div>
+    </div>
+
+    <div id='post-body'>
+        <h2># overview</h2>  
+        <p style='max-width:70%'>Every week Jeff Caveliere, Athlean-X.com, uploads YouTube videos. 
+The moment after he uploads a video, he posts a comment that links to a free workout giveaway. 
+The catch is that only 100 randomly selected individuals who click the link within 1 hour after it got posted win the giveaway. 
+</p>
+        <p>The obvious question: how can we scam Jeff to harvest free workouts?</p>
+        <img style='max-width:70%' src='comment.png'/>
+        <p>&nbsp;</p>
+        <h2># the plan</h2>  
+        <p>Usually when you click the giveaway link, it sends you to a page that says you lost. When you click the same link again, it sends you to the same page (ensuring that no single person can just click the link over and over again until he wins). However, how does Jeff's website tell that you've clicked the link multiple times? <br><br>
+It turns out that it's somehow linked to the HTTP Request Header that gets sent to Jeff's server when you click on the link. I found that by changing the User-Agent field in the header, it's as if you clicked the link for the first time, giving you another chance to win. <br><br><b>Hence, we can spam requests to the URL with different User-Agent fields, until we win.</b>
+        <h2># listening to youtube</h2>
+        <p>The first step is to run code right after Jeff uploads a new video. 
+To do this, I used MIT's athena dialup for webspace to host a PHP script yt-upload.php. This script will be invoked as a callback to whenever Jeff uploads a video. <br><br>
+
+YouTube provides a convenient API to subscribe to channels and get notified whenever they upload. To subscribe, we need to find a topic URL in this form: 
+
+<pre>https://www.youtube.com/xml/feeds/videos.xml?channel_id=CHANNEL_ID</pre>
+
+<p>where CHANNEL_ID gets replaced by Athlean-X's YouTube Channel ID. This is an RSS feed, and we can use Google's PubSubHub API (<a href="https://pubsubhubbub.appspot.com/">link</a>) to subscribe our yt-upload.php callback to the XML feed.<br><br>To do that succesfully, our PHP script has to echo the challenge code passed by pubsubhub like this:
+        </p>
+        <pre>
+        if (isset($_GET['hub_challenge'])) {
+            echo $_GET['hub_challenge'];
+            exit();
+        }
+        </pre>
+    <p>Once that's done, we've sucessfully subscribed and whenever Jeff uploads a video, 
+information about that video gets sent to the callback script as Post data that looks like this: </p>
+        <pre>
+Host: tjz.scripts.mit.edu
+Link: &lt;https://www.youtube.com/xml/feeds/videos.xml?channel_id=UCe0TLA0EsQbE-MjuHXevj2A&gt;; rel=self, &lt;http://pubsubhubbub.appspot.com/&gt;; rel=hub
+Cache-Control: no-cache,max-age=0
+Pragma: no-cache
+Accept: */*
+From: googlebot(at)googlebot.com
+User-Agent: FeedFetcher-Google; (+http://www.google.com/feedfetcher.html)
+Accept-Encoding: gzip,deflate,br
+Connection: close
+
+&lt;?xml version=&apos;1.0&apos; encoding=&apos;UTF-8&apos;?&gt;
+&lt;feed xmlns:yt=&quot;http://www.youtube.com/xml/schemas/2015&quot; xmlns=&quot;http://www.w3.org/2005/Atom&quot;&gt;&lt;link rel=&quot;hub&quot; href=&quot;https://pubsubhubbub.appspot.com&quot;/&gt;&lt;link rel=&quot;self&quot; href=&quot;https://www.youtube.com/xml/feeds/videos.xml?channel_id=UCe0TLA0EsQbE-MjuHXevj2A&quot;/&gt;&lt;title&gt;YouTube video feed&lt;/title&gt;&lt;updated&gt;2020-11-01T17:53:37.063351109+00:00&lt;/updated&gt;&lt;entry&gt;
+  &lt;id&gt;yt:video:H21MYZsw_2A&lt;/id&gt;
+  &lt;yt:videoId&gt;H21MYZsw_2A&lt;/yt:videoId&gt;
+  &lt;yt:channelId&gt;UCe0TLA0EsQbE-MjuHXevj2A&lt;/yt:channelId&gt;
+  &lt;title&gt;7 Beginner Workout Mistakes You MUST Avoid!!&lt;/title&gt;
+  &lt;link rel=&quot;alternate&quot; href=&quot;https://www.youtube.com/watch?v=H21MYZsw_2A&quot;/&gt;
+  &lt;author&gt;
+   &lt;name&gt;ATHLEAN-X™&lt;/name&gt;
+   &lt;uri&gt;https://www.youtube.com/channel/UCe0TLA0EsQbE-MjuHXevj2A&lt;/uri&gt;
+  &lt;/author&gt;
+  &lt;published&gt;2020-11-01T17:53:04+00:00&lt;/published&gt;
+  &lt;updated&gt;2020-11-01T17:53:37.063351109+00:00&lt;/updated&gt;
+ &lt;/entry&gt;&lt;/feed&gt;
+        </pre>
+    <p>The important part of this is the is the yt:videoId tag that holds the ID of the video that Jeff just uploaded. To make processing of this input easier, I decided to just append it to a log file and process the log file in a python script later. </p>
+    <pre>
+ob_start();
+$req_dump .= var_export($_GET)."\n\n---------------";
+$req_dump .= var_export($_POST)."\n\n---------------";
+$result = ob_get_clean();
+$req_dump .= $result;
+$fp = file_put_contents('request.log', $req_dump, FILE_APPEND);
+ob_end_clean();
+</pre>
+    <p>Because MIT Athena webspaces are very outdated and in general quite weird, I had to use nohup to ensure that the script gets executed in the background.</p>
+<pre>
+$out = shell_exec("nohup python3 pwn.py &gt; /dev/null 2&gt;&amp;1 &amp;");
+</pre>
+
+<h2># spamm now pls</h2>
+    <p>As you might tell, pwn.py is where the magic happens. It gets executed when a video gets uploaded and it can parse the logfile to find which video got uploaded. Quick and dirty, we get the video ID:</p> 
+<pre>
+    f = open(&quot;request.log&quot;, &quot;r&quot;, encoding=&quot;utf-8&quot;)
+    vid = f.read().split(&quot;&lt;id&gt;yt:video:&quot;)[-1].split(&quot;&lt;/id&quot;)[0]
+    f.close()
+</pre>
+<p>And then we use YouTube's Rest API to get a list of comments given the video ID. Like so: </p>
+<pre>
+s = "https://www.googleapis.com/youtube/v3/commentThreads?part=snippet&amp;videoId={}&amp;key={}".format(vid, api)
+</pre>
+<p>Note that you need to get a Google API key to use this API. Making a GET request to this URL will yield JSON which can be conveniently parsed and looped over to find the giveaway URL. </p>
+<pre>
+for comment in json["items"]:
+    author = comment["snippet"]["topLevelComment"]["snippet"]["authorDisplayName"]
+    content = comment["snippet"]["topLevelComment"]["snippet"]["textDisplay"]
+    if "ATHLEAN-X" in author:
+        url = content.split("href=\"")[1].split("\"")[0]
+        log("extractd url", url)
+</pre>
+<p>Obviously there is more error checking retry attempts and timeouts in the case of failure, but these are left out for brevity. </p>
+<p>Now that we have the giveaway URL, we can start the main crunch. This is what it looks like:</p>
+<pre>
+while not won and time.time() - start_t < duration:
+    try:
+        agent = str(random.random())
+        log("making request with user agent: ", agent)
+        page, info, resp_url = get_page_as(url, agent)
+
+        if "please try again next time" in page.lower():
+            log("Failed...")
+        elif "this giveaway has expired" in page.lower():
+            log("Expired...")
+        else:
+            log(resp_url)
+            log(page)
+            log(agent)
+            log(info)
+            f = open("success", "w")
+            f.write(str(info) + '\n')
+            f.write(str(agent) + "\n---\n")
+            f.write(str(page))
+            f.close()
+            won = True
+    except:
+        pass
+    time.sleep(.2)
+</pre>
+<p>Here we make a request to the giveaway URL ever 0.2 seconds with a randomly generated useragent (just a random number) until we win or the timeout expires (after 10 minutes). The way winning works is that the URL will re-direct you to a different secret URL in the form of: </p>
+<pre>
+https://giveaway.athleanx.com/congrats.html?reg=LONG_RANDOM_STRING
+</pre>
+<p>This is the gold nugget. Once we see that we've won, we save this URL to a file called success, and then we can open it and enjoy the fruits of our labor whenever we want. </p>
+<br>
+<p>For those interested, here is how we change the user agent when making the request with python's outdated urllib2.</p>
+<pre>
+def get_page_as(url, ua):
+    req = urllib.request.Request(url)
+    req.add_header("User-Agent", ua)
+    with urllib.request.urlopen(req) as response:
+       return str(response.read(), 'utf-8'), response.info(), response.geturl()
+</pre>
+<h2># source code</h2>
+<p>Before you ask, "can i has source code pls" -- it's <a href='https://github.com/travisjayday/autopwn-athlean'>here</a>.</p>
+
+<h2># big thanks</h2>
+<p>
+Shoutout to my homie Jeff Caveliere for providing me the opportunity to steal from him and helping me make mad gainz. Big Respekt.
+</p>
+    </div>
+</body>
+</html>

@@ -13,7 +13,7 @@ var blogsData = [
      {
         "title": "Automating Free Workout Programs",
         "desc": "This blog covers how I used pubsubhub, Google's YouTube API, and MIT's dialup to quickly snatch AthleanX workout programs.",
-        "url": "./blogs/athlean",
+        "url": "./blogs/athlean/index.html",
         "tags": {
             "items": ["PHP", "Python3", "Automation"]
         }       
